@@ -1,6 +1,3 @@
-const env = require('dotenv');
-env.config();
-
 const isProd = process.env.NODE_ENV === 'production';
 const entitiesExtension = isProd ? 'js' : 'ts';
 const entitiesDir = isProd ? 'dist' : 'src';
@@ -12,10 +9,10 @@ module.exports = {
   url: process.env.DATABASE_URL,
   migrations: [migrationsDir],
   cli: {
-    migrationsDir: 'src/migration',
+    migrationsDir: 'src/migration'
   },
   migrationsRun: true,
   synchronize: true,
   autoSchemaSync: true,
-  ssl: { rejectUnauthorized: false },
+  ssl: { rejectUnauthorized: false }
 };
