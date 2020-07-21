@@ -13,7 +13,7 @@
         "start:debug": "nest start --debug --watch",
         "prestart:prod": "tsc",
         "start:prod": "node dist/main",
-        "migration:run:prod": "tsc && ts-node ./node_modules/typeorm/cli.js migration:run",
+        "migration:run:prod": "ts-node ./node_modules/typeorm/cli.js migration:run",
         "migrations:generate": "typeorm migration:generate -n migration",
         "schema:sync": "ts-node ./node_modules/typeorm/cli.js schema:sync",
         "schema:drop": "ts-node ./node_modules/typeorm/cli.js schema:drop",
