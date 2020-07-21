@@ -11,6 +11,7 @@
         "start": "nest start",
         "start:dev": "nest start --watch",
         "start:debug": "nest start --debug --watch",
+        "prestart:prod": "tsc",
         "start:prod": "node dist/main",
         "migration:run:prod": "tsc && ts-node ./node_modules/typeorm/cli.js migration:run",
         "migrations:generate": "typeorm migration:generate -n migration",
