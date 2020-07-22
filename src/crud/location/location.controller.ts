@@ -5,13 +5,13 @@ import {
   Param,
   ParseIntPipe,
   Post,
-  Put,
-  ValidationPipe
+  Put
 } from '@nestjs/common';
 import { LocationService } from './location.service';
 import { CreateOrUpdateLocationDto } from './dto/create-or-update-location';
+import { baseUrl } from '../crud.controller';
 
-@Controller('location')
+@Controller(`${baseUrl}/location`)
 export class LocationController {
   constructor(private locationService: LocationService) {}
 

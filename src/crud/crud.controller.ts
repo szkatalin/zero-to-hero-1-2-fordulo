@@ -1,4 +1,6 @@
 import { Controller } from '@nestjs/common';
 
-@Controller('api')
+export const baseUrl = 'api';
+
+@Controller(baseUrl)
 export class CrudController {}

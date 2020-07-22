@@ -9,8 +9,9 @@ import {
 } from '@nestjs/common';
 import { CreateOrUpdateEquipmentDto } from './dto/create-or-update-equipment.dto';
 import { EquipmentService } from './equipment.service';
+import { baseUrl } from '../crud.controller';
 
-@Controller('equipment')
+@Controller(`${baseUrl}/equipment`)
 export class EquipmentController {
   constructor(private equipmentService: EquipmentService) {}
 
