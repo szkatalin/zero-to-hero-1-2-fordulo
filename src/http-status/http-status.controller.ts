@@ -8,7 +8,7 @@ export class HttpStatusController {
   @Get('/getStatusDescription')
   getStatusDescription(
     @Query('statusCode', ParseIntPipe) statusCode: number
-  ): string | Error {
+  ): string {
     return this.httpStatusService.getStatusDescription(statusCode);
   }
 }

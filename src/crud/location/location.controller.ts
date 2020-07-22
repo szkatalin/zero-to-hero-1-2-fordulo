@@ -6,22 +6,29 @@ import {
   ParseIntPipe,
   Post,
   Put,
+  ValidationPipe
 } from '@nestjs/common';
 import { LocationService } from './location.service';
-import { Location } from '../model/location.entity';
+import { CreateOrUpdateLocationDto } from './dto/create-or-update-location';
 
 @Controller('location')
 export class LocationController {
   constructor(private locationService: LocationService) {}
 
   @Post()
-  public createLocation(@Body() location: Location) {
-    return this.locationService.createLocation();
+  public createLocation(
+    @Body()
+    createOrUpdateLocationDto: CreateOrUpdateLocationDto
+  ) {
+    return this.locationService.createLocation(createOrUpdateLocationDto);
   }
 
   @Put(':id')
-  public updateLocation(@Param('id', ParseIntPipe) id: number) {
-    return this.locationService.updateLocation();
+  public updateLocation(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateLocationDto: CreateOrUpdateLocationDto
+  ) {
+    return this.locationService.updateLocation(id, updateLocationDto);
   }
 
   @Delete(':id')

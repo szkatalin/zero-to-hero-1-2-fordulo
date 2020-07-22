@@ -13,13 +13,13 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       autoLoadEntities: true,
       synchronize: true,
       migrationsRun: true,
-      ssl: { rejectUnauthorized: false },
+      ssl: { rejectUnauthorized: false }
     }),
     LocationModule,
     EquipmentModule,
-    EmployeeModule,
+    EmployeeModule
   ],
   controllers: [CrudController],
-  providers: [CrudService],
+  providers: [CrudService]
 })
 export class CrudModule {}

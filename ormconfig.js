@@ -12,7 +12,7 @@ module.exports = {
     migrationsDir: 'src/migration'
   },
   migrationsRun: true,
-  synchronize: true,
+  synchronize: false,
   autoSchemaSync: true,
   ssl: { rejectUnauthorized: false }
 };
