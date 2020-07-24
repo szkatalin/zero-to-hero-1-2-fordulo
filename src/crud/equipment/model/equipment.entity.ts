@@ -25,7 +25,7 @@ export class Equipment extends BaseEntity {
   @ManyToOne(
     () => Location,
     location => location.equipments,
-    { onDelete: 'CASCADE' }
+    { eager: true, onDelete: 'CASCADE' }
   )
   @JoinColumn({ name: 'locatedAt' })
   locatedAt: Location;

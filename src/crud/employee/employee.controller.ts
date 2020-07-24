@@ -9,9 +9,8 @@ import {
 } from '@nestjs/common';
 import { CreateOrUpdateEmployeeDto } from './dto/create-or-update-employee.dto';
 import { EmployeeService } from './employee.service';
-import { baseUrl } from '../crud.controller';
 
-@Controller(`${baseUrl}/employee`)
+@Controller(`api/employee`)
 export class EmployeeController {
   constructor(private employeeService: EmployeeService) {}
 

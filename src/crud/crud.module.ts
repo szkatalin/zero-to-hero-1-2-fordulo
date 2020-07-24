@@ -1,6 +1,4 @@
 import { Module } from '@nestjs/common';
-import { CrudController } from './crud.controller';
-import { CrudService } from './crud.service';
 import { LocationModule } from './location/location.module';
 import { EquipmentModule } from './equipment/equipment.module';
 import { EmployeeModule } from './employee/employee.module';
@@ -19,7 +17,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     EquipmentModule,
     EmployeeModule
   ],
-  controllers: [CrudController],
-  providers: [CrudService]
+  controllers: [],
+  providers: []
 })
 export class CrudModule {}

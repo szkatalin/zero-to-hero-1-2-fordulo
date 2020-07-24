@@ -9,9 +9,8 @@ import {
 } from '@nestjs/common';
 import { LocationService } from './location.service';
 import { CreateOrUpdateLocationDto } from './dto/create-or-update-location';
-import { baseUrl } from '../crud.controller';
 
-@Controller(`${baseUrl}/location`)
+@Controller(`api/location`)
 export class LocationController {
   constructor(private locationService: LocationService) {}
 

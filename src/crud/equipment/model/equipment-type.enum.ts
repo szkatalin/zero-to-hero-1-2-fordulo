@@ -1,5 +1,7 @@
 export enum EquipmentType {
-  CASH = 'CASH', // pénztárgép
-  REGISTER = 'REGISTER', // éttermi szoftvert kezelő rendszer
-  OVEN = 'OVEN' // sütő
+  CASH = 'CASH',
+  REGISTER = 'REGISTER',
+  OVEN = 'OVEN'
 }
+
+export const EQUIPMENT_TYPES = Object.values(EquipmentType);

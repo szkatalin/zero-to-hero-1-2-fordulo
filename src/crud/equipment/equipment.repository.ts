@@ -2,7 +2,6 @@ import { EntityRepository, getCustomRepository, Repository } from 'typeorm';
 import { Equipment } from './model/equipment.entity';
 import { CreateOrUpdateEquipmentDto } from './dto/create-or-update-equipment.dto';
 import { BadRequestException, NotFoundException } from '@nestjs/common';
-import { Location } from '../location/model/location.entity';
 import { EquipmentType } from './model/equipment-type.enum';
 import { LocationRepository } from '../location/location.repository';
 
@@ -26,7 +25,7 @@ export class EquipmentRepository extends Repository<Equipment> {
       createEquipmentDto.locatedAt
     ) {
       equipment.name = createEquipmentDto.name;
-      equipment.type = createEquipmentDto.type as EquipmentType;
+      equipment.type = createEquipmentDto.type;
       equipment.locatedAt = location;
     } else {
       throw new BadRequestException();
@@ -45,8 +44,21 @@ export class EquipmentRepository extends Repository<Equipment> {
       equipment.name = updateEquipmentDto.name;
     }
 
-    if (updateEquipmentDto.type) {
-      equipment.type = updateEquipmentDto.type as EquipmentType;
+    if (
+      updateEquipmentDto.type &&
+      EquipmentType[updateEquipmentDto.type] !== undefined
+    ) {
+      equipment.type = EquipmentType[updateEquipmentDto.type];
+    } else {
+      throw new BadRequestException('This type of equipment does not exist!');
+    }
+
+    if (updateEquipmentDto.locatedAt) {
+      const location = await getCustomRepository(
+        LocationRepository
+      ).getLocationById(updateEquipmentDto.locatedAt);
+
+      equipment.locatedAt = location;
     }
 
     return equipment.save();
@@ -56,6 +68,4 @@ export class EquipmentRepository extends Repository<Equipment> {
     const equipment = await this.getEquipmentById(id);
     return equipment.remove();
   }
-
-  async isEquipmentAvailable(locationId: number, equipment: EquipmentType) {}
 }

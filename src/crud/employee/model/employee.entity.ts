@@ -3,6 +3,7 @@ import {
   Column,
   Entity,
   JoinColumn,
+  ManyToOne,
   OneToOne,
   PrimaryGeneratedColumn
 } from 'typeorm';
@@ -18,13 +19,13 @@ export class Employee extends BaseEntity {
   @Column()
   name: string;
 
-  @Column()
+  @Column({ type: 'enum', enum: JobType })
   job: JobType;
 
-  @OneToOne(
+  @ManyToOne(
     () => Location,
     location => location.employees,
-    { onDelete: 'CASCADE' }
+    { eager: true, onDelete: 'CASCADE' }
   )
   @JoinColumn({ name: 'worksAt' })
   worksAt: Location;
@@ -32,7 +33,7 @@ export class Employee extends BaseEntity {
   @OneToOne(
     () => Equipment,
     equipment => equipment.uses,
-    { onDelete: 'CASCADE' }
+    { eager: true, onDelete: 'CASCADE' }
   )
   @JoinColumn({ name: 'operates' })
   operates: Equipment;
