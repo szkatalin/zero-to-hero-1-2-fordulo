@@ -5,6 +5,7 @@
     "author": "Szalai Katalin",
     "license": "MIT",
     "scripts": {
+        "prestart:prod": "tsc",
         "prebuild": "rimraf dist",
         "build": "nest build",
         "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
@@ -19,12 +20,13 @@
         "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
         "test:e2e": "jest --config ./test/jest-e2e.json"
     },
-    "heroku-run-build-script": true,
     "dependencies": {
         "@nestjs/common": "^7.3.2",
         "@nestjs/core": "^7.3.2",
+        "@nestjs/microservices": "^7.3.2",
         "@nestjs/platform-express": "^7.3.2",
         "@nestjs/typeorm": "^7.1.0",
+        "@types/node": "^13.1.6",
         "class-transformer": "^0.2.3",
         "class-validator": "^0.8.1",
         "pg": "^8.3.0",
