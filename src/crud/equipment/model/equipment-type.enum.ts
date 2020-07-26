@@ -1,7 +1,4 @@
 export enum EquipmentType {
-  CASH = 'CASH',
-  REGISTER = 'REGISTER',
+  CASH_REGISTER = 'CASH_REGISTER',
   OVEN = 'OVEN'
 }
-
-export const EQUIPMENT_TYPES = Object.values(EquipmentType);

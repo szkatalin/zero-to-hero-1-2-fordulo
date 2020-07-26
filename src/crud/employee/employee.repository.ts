@@ -3,12 +3,9 @@ import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { Employee } from './model/employee.entity';
 import { CreateOrUpdateEmployeeDto } from './dto/create-or-update-employee.dto';
 import { LocationRepository } from '../location/location.repository';
-import { JobType, JOB_TYPES } from './model/job-type.enum';
+import { JobType } from './model/job-type.enum';
 import { EquipmentRepository } from '../equipment/equipment.repository';
-import {
-  EQUIPMENT_TYPES,
-  EquipmentType
-} from '../equipment/model/equipment-type.enum';
+import { EquipmentType } from '../equipment/model/equipment-type.enum';
 import { Location } from '../location/model/location.entity';
 
 @EntityRepository(Employee)
@@ -152,11 +149,11 @@ export class EmployeeRepository extends Repository<Employee> {
   }
 
   private isEquipmentForEmployee(job: JobType, equipmentType: EquipmentType) {
-    console.log(
-      JOB_TYPES.indexOf(job) !== EQUIPMENT_TYPES.indexOf(equipmentType)
-    );
-    if (JOB_TYPES.indexOf(job) !== EQUIPMENT_TYPES.indexOf(equipmentType)) {
-      console.log('hello');
+    if (
+      ((job === JobType.MANAGER || job === JobType.CASHIER) &&
+        equipmentType !== EquipmentType.CASH_REGISTER) ||
+      (job === JobType.COOK && equipmentType !== EquipmentType.OVEN)
+    ) {
       throw new BadRequestException(
         'The worker may only use equipment belonging to his/her own task! '
       );
