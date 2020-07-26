@@ -26,16 +26,14 @@
         "@nestjs/microservices": "^7.3.2",
         "@nestjs/platform-express": "^7.3.2",
         "@nestjs/typeorm": "^7.1.0",
-        "@types/node": "^13.1.6",
-        "class-transformer": "^0.2.3",
-        "class-validator": "^0.8.1",
         "pg": "^8.3.0",
         "reflect-metadata": "^0.1.13",
         "rimraf": "^3.0.0",
         "rxjs": "^6.5.4",
         "ts-node": "^8.6.0",
+        "typeorm": "^0.2.25",
         "typescript": "^3.7.4",
-        "typeorm": "^0.2.25"
+        "@types/node": "^13.1.6"
     },
     "devDependencies": {
         "@nestjs/cli": "^6.13.2",
@@ -55,7 +53,9 @@
         "supertest": "^4.0.2",
         "ts-jest": "^24.3.0",
         "ts-loader": "^6.2.1",
-        "tsconfig-paths": "^3.9.0"
+        "ts-node": "^8.6.0",
+        "tsconfig-paths": "^3.9.0",
+        "typescript": "^3.7.4"
     },
     "jest": {
         "moduleFileExtensions": [
