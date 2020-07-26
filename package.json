@@ -2,7 +2,7 @@
     "name": "zth-1-fordulo",
     "version": "0.0.1",
     "description": "",
-    "author": "",
+    "author": "Szalai Katalin",
     "license": "MIT",
     "scripts": {
         "prebuild": "rimraf dist",

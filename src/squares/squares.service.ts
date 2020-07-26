@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { Point } from './point';
 
 @Injectable()
@@ -6,6 +6,10 @@ export class SquaresService {
   private squaresCount: number;
 
   getNumberOfSquares(listOfPoints: Point[]): number {
+    if (!listOfPoints) {
+      throw new BadRequestException('');
+    }
+
     let data: Point[] = [];
     this.squaresCount = 0;
     this.combinationUtil(listOfPoints, data, 0, listOfPoints.length - 1, 0, 4);
@@ -21,18 +25,6 @@ export class SquaresService {
     k: number
   ) {
     if (index == k && this.isSquare(data[0], data[1], data[2], data[3])) {
-      // console.log(
-      //   this.squaresCount,
-      //   '-->',
-      //   'p1:',
-      //   data[0],
-      //   'p2:',
-      //   data[1],
-      //   'p3:',
-      //   data[2],
-      //   'p4:',
-      //   data[3]
-      // );
       this.squaresCount++;
     }
 
