@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Order</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+</head>
+<body>
+<div id="v-app">
+    <h1>{{title}}</h1>
+    <p>
+    <ul>
+        <li v-for="msg of messages">{{msg}}</li>
+    </ul>
+    </p>
+</div>
+</body>
+<script>
+  const app = new Vue({
+    el: '#v-app',
+    data: {
+      title: 'Orders from the waiter',
+      text: '',
+      messages: [],
+      socket: null
+    },
+    methods: {
+      sendMessage() {
+        if (this.text !== '') {
+          console.log('sent: ', this.text);
+          this.socket.emit('message', this.text);
+          this.text = '';
+        }
+      },
+      receiveMessage(msg) {
+        this.messages.push(msg);
+        console.log('received: ', msg);
+      }
+    },
+    created() {
+      this.socket = io('http://localhost:3000');
+      this.socket.on('prepare', (msg) => {
+        this.receiveMessage(msg);
+      });
+    }
+  });
+</script>
+</html>
