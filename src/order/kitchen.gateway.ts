@@ -10,14 +10,14 @@ import {
 import { Socket, Server } from 'socket.io';
 import { Logger } from '@nestjs/common';
 
-@WebSocketGateway({})
+@WebSocketGateway()
 export class KitchenGateway
   implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect {
   private logger: Logger = new Logger('KitchenGateway');
   @WebSocketServer() wss: Server;
 
   @SubscribeMessage('prepare')
-  handleMessage(text: string): WsResponse<string> {
+  handleMessage(client: Socket, text: string): WsResponse<string> {
     this.logger.log(`Order received from waiter`);
     return {
       event: 'prepare',

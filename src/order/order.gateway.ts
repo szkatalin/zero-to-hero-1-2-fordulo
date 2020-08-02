@@ -20,9 +20,9 @@ export class OrderGateway
   @SubscribeMessage('order')
   handleMessage(client: Socket, text: string): WsResponse<string> {
     this.logger.log(`Order received`);
-    this.wss.emit('prepare', 'hgjf');
+    this.wss.emit('prepare', text);
     return {
-      event: 'prepare',
+      event: 'order',
       data: `We received your order! You ordered: ${text}`
     };
   }
