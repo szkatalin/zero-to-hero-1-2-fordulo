@@ -5,33 +5,32 @@ import {
   Param,
   ParseIntPipe,
   Post,
-  Put
+  Put,
+  ValidationPipe
 } from '@nestjs/common';
-import { CreateOrUpdateEmployeeDto } from './dto/create-or-update-employee.dto';
 import { EmployeeService } from './employee.service';
+import { CreateEmployeeDto } from './dto/create-employee.dto';
+import { UpdateEmployeeDto } from './dto/update-employee.dto';
 
-@Controller(`api/employee`)
+@Controller('api/employee')
 export class EmployeeController {
   constructor(private employeeService: EmployeeService) {}
 
   @Post()
-  createEmployee(@Body() createEmployeeDto: CreateOrUpdateEmployeeDto) {
+  createEmployee(@Body(ValidationPipe) createEmployeeDto: CreateEmployeeDto) {
     return this.employeeService.createEmployee(createEmployeeDto);
   }
 
   @Put(':id')
   updateEmployee(
     @Param('id', ParseIntPipe) id: number,
-    @Body() updateEmployeeDto: CreateOrUpdateEmployeeDto
+    @Body(ValidationPipe) updateEmployeeDto: UpdateEmployeeDto
   ) {
     return this.employeeService.updateEmployee(id, updateEmployeeDto);
   }
 
   @Delete(':id')
-  deleteEmployee(
-    @Param('id', ParseIntPipe) id: number,
-    @Body() createEmployeeDto: CreateOrUpdateEmployeeDto
-  ) {
+  deleteEmployee(@Param('id', ParseIntPipe) id: number) {
     return this.employeeService.deleteEmployee(id);
   }
 }

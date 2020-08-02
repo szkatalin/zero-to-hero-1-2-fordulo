@@ -5,10 +5,12 @@ import {
   Param,
   ParseIntPipe,
   Post,
-  Put
+  Put,
+  ValidationPipe
 } from '@nestjs/common';
-import { CreateOrUpdateEquipmentDto } from './dto/create-or-update-equipment.dto';
 import { EquipmentService } from './equipment.service';
+import { CreateEquipmentDto } from './dto/create-equipment.dto';
+import { UpdateEquipmentDto } from './dto/update-equipment.dto';
 
 @Controller(`api/equipment`)
 export class EquipmentController {
@@ -16,8 +18,8 @@ export class EquipmentController {
 
   @Post()
   createEquipment(
-    @Body()
-    createEquipmentDto: CreateOrUpdateEquipmentDto
+    @Body(ValidationPipe)
+    createEquipmentDto: CreateEquipmentDto
   ) {
     return this.equipmentService.createEquipment(createEquipmentDto);
   }
@@ -25,8 +27,8 @@ export class EquipmentController {
   @Put(':id')
   updateEquipment(
     @Param('id', ParseIntPipe) id: number,
-    @Body()
-    updateEquipmentDto: CreateOrUpdateEquipmentDto
+    @Body(ValidationPipe)
+    updateEquipmentDto: UpdateEquipmentDto
   ) {
     return this.equipmentService.updateEquipment(id, updateEquipmentDto);
   }

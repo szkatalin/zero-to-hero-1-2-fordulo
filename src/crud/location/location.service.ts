@@ -1,7 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { CreateOrUpdateLocationDto } from './dto/create-or-update-location';
 import { LocationRepository } from './location.repository';
 import { InjectRepository } from '@nestjs/typeorm';
+import { CreateLocationDto } from './dto/create-location.dto';
+import { UpdateLocationDto } from './dto/update-location.dto';
+import { validate } from 'class-validator';
 
 @Injectable()
 export class LocationService {
@@ -10,12 +12,16 @@ export class LocationService {
     private locationRepository: LocationRepository
   ) {}
 
-  public async createLocation(createLocationDto: CreateOrUpdateLocationDto) {
-    return this.locationRepository.createLocation(createLocationDto);
+  public async createLocation(createLocationDto: CreateLocationDto) {
+    return validate(createLocationDto).then(() => {
+      return this.locationRepository.createLocation(createLocationDto);
+    })
   }
 
-  updateLocation(id: number, updateLocationDto: CreateOrUpdateLocationDto) {
-    return this.locationRepository.updateLocation(id, updateLocationDto);
+  updateLocation(id: number, updateLocationDto: UpdateLocationDto) {
+    return validate(updateLocationDto).then(() => {
+      return this.locationRepository.updateLocation(id, updateLocationDto);
+    })
   }
 
   deleteLocation(id: number) {

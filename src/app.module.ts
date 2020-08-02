@@ -3,9 +3,10 @@ import { HttpStatusModule } from './http-status/http-status.module';
 import { SquaresModule } from './squares/squares.module';
 import { AppController } from './app.controller';
 import { CrudModule } from './crud/crud.module';
+import { NumberOfStepsModule } from './number-of-steps/number-of-steps.module';
 
 @Module({
-  imports: [HttpStatusModule, SquaresModule, CrudModule],
+  imports: [HttpStatusModule, SquaresModule, CrudModule, NumberOfStepsModule],
   controllers: [AppController]
 })
 export class AppModule {}

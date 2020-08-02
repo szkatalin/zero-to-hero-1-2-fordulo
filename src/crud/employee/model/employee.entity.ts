@@ -22,6 +22,9 @@ export class Employee extends BaseEntity {
   @Column({ type: 'enum', enum: JobType })
   job: JobType;
 
+  @Column({ type: 'int', nullable: false })
+  salary: number;
+
   @ManyToOne(
     () => Location,
     location => location.employees,
@@ -33,7 +36,7 @@ export class Employee extends BaseEntity {
   @OneToOne(
     () => Equipment,
     equipment => equipment.uses,
-    { eager: true, onDelete: 'CASCADE' }
+    { eager: true, onDelete: 'CASCADE', nullable: true }
   )
   @JoinColumn({ name: 'operates' })
   operates: Equipment;

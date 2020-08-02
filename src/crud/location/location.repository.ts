@@ -1,7 +1,8 @@
 import { EntityRepository, Repository } from 'typeorm';
 import { Location } from './model/location.entity';
-import { CreateOrUpdateLocationDto } from './dto/create-or-update-location';
 import { BadRequestException, NotFoundException } from '@nestjs/common';
+import { CreateLocationDto } from './dto/create-location.dto';
+import { UpdateLocationDto } from './dto/update-location.dto';
 
 @EntityRepository(Location)
 export class LocationRepository extends Repository<Location> {
@@ -11,23 +12,16 @@ export class LocationRepository extends Repository<Location> {
     throw new NotFoundException(`Location with ID "${id}" not found!`);
   }
 
-  async createLocation(createLocationDto: CreateOrUpdateLocationDto) {
+  async createLocation(createLocationDto: CreateLocationDto) {
     let location = new Location();
 
-    if (createLocationDto.name && createLocationDto.address) {
-      location.name = createLocationDto.name;
-      location.address = createLocationDto.address;
-    } else {
-      throw new BadRequestException();
-    }
+    location.name = createLocationDto.name;
+    location.address = createLocationDto.address;
 
     return location.save();
   }
 
-  async updateLocation(
-    id: number,
-    updateLocationDto: CreateOrUpdateLocationDto
-  ) {
+  async updateLocation(id: number, updateLocationDto: UpdateLocationDto) {
     const location = await this.getLocationById(id);
 
     if (updateLocationDto.name) {

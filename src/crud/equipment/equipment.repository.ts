@@ -1,9 +1,10 @@
 import { EntityRepository, getCustomRepository, Repository } from 'typeorm';
 import { Equipment } from './model/equipment.entity';
-import { CreateOrUpdateEquipmentDto } from './dto/create-or-update-equipment.dto';
-import { BadRequestException, NotFoundException } from '@nestjs/common';
+import { NotFoundException } from '@nestjs/common';
 import { EquipmentType } from './model/equipment-type.enum';
 import { LocationRepository } from '../location/location.repository';
+import { CreateEquipmentDto } from './dto/create-equipment.dto';
+import { UpdateEquipmentDto } from './dto/update-equipment.dto';
 
 @EntityRepository(Equipment)
 export class EquipmentRepository extends Repository<Equipment> {
@@ -13,52 +14,38 @@ export class EquipmentRepository extends Repository<Equipment> {
     throw new NotFoundException(`Equipment with ID "${id}" not found!`);
   }
 
-  async createEquipment(createEquipmentDto: CreateOrUpdateEquipmentDto) {
+  async createEquipment(createEquipmentDto: CreateEquipmentDto) {
     const equipment = new Equipment();
-    const location = await getCustomRepository(
-      LocationRepository
-    ).getLocationById(createEquipmentDto.locatedAt);
 
-    if (
-      createEquipmentDto.name &&
-      EquipmentType[createEquipmentDto.type] !== undefined &&
-      createEquipmentDto.locatedAt
-    ) {
+    if (createEquipmentDto.name && createEquipmentDto.locatedAt) {
       equipment.name = createEquipmentDto.name;
-      equipment.type = createEquipmentDto.type;
-      equipment.locatedAt = location;
-    } else {
-      throw new BadRequestException();
+      equipment.locatedAt = await getCustomRepository(
+        LocationRepository
+      ).getLocationById(createEquipmentDto.locatedAt);
+    }
+
+    if (createEquipmentDto.type) {
+      equipment.type = EquipmentType[createEquipmentDto.type];
     }
 
     return equipment.save();
   }
 
-  async updateEquipment(
-    id: number,
-    updateEquipmentDto: CreateOrUpdateEquipmentDto
-  ) {
+  async updateEquipment(id: number, updateEquipmentDto: UpdateEquipmentDto) {
     const equipment = await this.getEquipmentById(id);
 
     if (updateEquipmentDto.name) {
       equipment.name = updateEquipmentDto.name;
     }
 
-    if (
-      updateEquipmentDto.type &&
-      EquipmentType[updateEquipmentDto.type] !== undefined
-    ) {
+    if (updateEquipmentDto.type) {
       equipment.type = EquipmentType[updateEquipmentDto.type];
-    } else {
-      throw new BadRequestException('This type of equipment does not exist!');
     }
 
     if (updateEquipmentDto.locatedAt) {
-      const location = await getCustomRepository(
+      equipment.locatedAt = await getCustomRepository(
         LocationRepository
       ).getLocationById(updateEquipmentDto.locatedAt);
-
-      equipment.locatedAt = location;
     }
 
     return equipment.save();

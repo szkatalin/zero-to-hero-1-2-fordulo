@@ -1,7 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { CreateOrUpdateEmployeeDto } from './dto/create-or-update-employee.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { EmployeeRepository } from './employee.repository';
+import { validate } from 'class-validator';
+import { CreateEmployeeDto } from './dto/create-employee.dto';
+import { UpdateEmployeeDto } from './dto/update-employee.dto';
 
 @Injectable()
 export class EmployeeService {
@@ -10,15 +12,16 @@ export class EmployeeService {
     private employeeRepository: EmployeeRepository
   ) {}
 
-  async createEmployee(createEmployeeDto: CreateOrUpdateEmployeeDto) {
-    return this.employeeRepository.createEmployee(createEmployeeDto);
+  async createEmployee(createEmployeeDto: CreateEmployeeDto) {
+    return validate(createEmployeeDto).then(() =>
+      this.employeeRepository.createEmployee(createEmployeeDto)
+    );
   }
 
-  async updateEmployee(
-    id: number,
-    createEmployeeDto: CreateOrUpdateEmployeeDto
-  ) {
-    return this.employeeRepository.updateEmployee(id, createEmployeeDto);
+  async updateEmployee(id: number, updateEmployeeDto: UpdateEmployeeDto) {
+    return validate(updateEmployeeDto).then(() =>
+      this.employeeRepository.updateEmployee(id, updateEmployeeDto)
+    );
   }
 
   deleteEmployee(id: number) {
